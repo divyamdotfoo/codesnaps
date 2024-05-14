@@ -1,45 +1,45 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useCodeBlock } from "@/store";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { nightOwl } from "react-syntax-highlighter/dist/esm/styles/hljs";
 export function CodeEditor() {
-  const codeString = `\n\n"use client";
-    import SyntaxHighlighter from "react-syntax-highlighter";
-    import { dracula } from "react-syntax-highlighter/dist/esm/styles/hljs";
-    export function CodeEditor() {
-      const codeString = use client
-      import SyntaxHighlighter from "react-syntax-highlighter";
-      import { dracula } from "react-syntax-highlighter/dist/esm/styles/hljs";
-      export function CodeEditor() {
-        const codeString = "(num) => num + 1";
-        return (
-          <SyntaxHighlighter language="javascript" style={dracula}>
-            {codeString}
-          </SyntaxHighlighter>
-        );
-      };
-      return (
-        <div className=" xl:w-1/2">
-          <SyntaxHighlighter language="javascript" style={dracula}>
-            {codeString}
-          </SyntaxHighlighter>
-        </div>
-      );
-    }`;
+  const { code, setCode } = useCodeBlock((s) => ({
+    code: s.code,
+    setCode: s.setCode,
+  }));
+  // const codeString = `\n
+  //   "use client";\nimport SyntaxHighlighter from "react-syntax-highlighter";\nimport { dracula } from "react-syntax-highlighter/dist/esm/styles/hljs";\nexport function CodeEditor() {\nconst codeString = use client
+  //     import SyntaxHighlighter from "react-syntax-highlighter";
+  //     import { dracula } from "react-syntax-highlighter/dist/esm/styles/hljs";
+  //     export function CodeEditor() {
+  //       const codeString = "(num) => num + 1";
+  //       return (
+  //         <SyntaxHighlighter language="javascript" style={dracula}>
+  //           {codeString}
+  //         </SyntaxHighlighter>
+  //       );
+  //     };
+  //     return (
+  //       <div className=" xl:w-1/2">
+  //         <SyntaxHighlighter language="javascript" style={dracula}>
+  //           {codeString}
+  //         </SyntaxHighlighter>
+  //       </div>
+  //     );
+  //   }`;
 
-  const [code, setCode] = useState(codeString);
   // useEffect(() => {
-  //   for (let i = 0; i < codeString.length; i++) {
+  //   for (let i = 0; i < codeString.length; i += 10) {
   //     setTimeout(() => {
-  //       setCode(codeString.slice(0, i + 1));
-  //     }, 10 * i);
+  //       setCode(codeString.slice(i, i + 10));
+  //     }, 50 * i);
   //   }
   // }, []);
   return (
-    <div className="xl:w-1/2 relative overflow-x-hidden bg-gradient-to-r from-indigo-500 to-pink-500 p-[2px] rounded-md">
+    <div className="xl:w-1/2 relative overflow-x-hidden bg-gradient-to-r from-indigo-500 to-pink-500 p-[2px] rounded-[6px]">
       <Mac />
       <SyntaxHighlighter
-        language="javascript"
+        language="rust"
         className="codeEditor"
         style={{
           ...nightOwl,
@@ -53,7 +53,7 @@ export function CodeEditor() {
             borderRadius: "6px",
             maxHeight: "400px",
             minHeight: "200px",
-            paddingLeft: "20px",
+            paddingLeft: "15px",
           },
         }}
       >
@@ -77,7 +77,7 @@ function Mac() {
         viewBox="0 0 54 14"
         className=" absolute top-3 left-3"
       >
-        <g fill="none" fill-rule="evenodd" transform="translate(1 1)">
+        <g fill="none" fillRule="evenodd" transform="translate(1 1)">
           <circle
             cx="6"
             cy="6"

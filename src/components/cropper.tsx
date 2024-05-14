@@ -1,39 +1,34 @@
 "use client";
 import { useImage } from "@/store";
-import { useState } from "react";
-import ReactCropper, { PixelCrop } from "react-image-crop";
+import ReactCropper from "react-image-crop";
+
 import "react-image-crop/dist/ReactCrop.css";
-import { Dialog } from "./ui/dialog";
-import { DialogContent } from "@radix-ui/react-dialog";
+import { Dialog, DialogContent } from "./ui/dialog";
+import { SendImageToServer } from "./send-image";
 export function ImageCropper() {
-  const [crop, setCrop] = useState<PixelCrop>();
-  const { blobUrl, cropper, handleCropper } = useImage((s) => ({
+  const { blobUrl, cropper, crop, setCrop, setShowCropper } = useImage((s) => ({
     setImage: s.setImage,
     blobUrl: s.imageBlobUrl,
-    imageState: s.image,
     cropper: s.cropper,
-    handleCropper: s.handleCropper,
+    setShowCropper: s.handleCropper,
+    crop: s.crop,
+    setCrop: s.setCrop,
   }));
-  // if (!blobUrl) return;
+  if (!blobUrl) return;
 
   return (
-    <Dialog open={cropper} onOpenChange={handleCropper}>
-      <DialogContent>
-        {/* <ReactCropper
+    <Dialog open={cropper} onOpenChange={setShowCropper}>
+      <DialogContent className="p-[3px] max-h-[400px] max-w-fit min-h-fit bg-gradient-to-r border-none from-indigo-500 to bg-pink-500">
+        <ReactCropper
+          className=" border-none max-h-[390px] mx-auto"
           crop={crop}
-          onChange={(c) => {
-            setCrop(c);
+          onChange={(c, pc) => {
+            setCrop(pc);
           }}
         >
           <img src={blobUrl} alt="" />
-        </ReactCropper> */}
-        <p>hello</p>
-        <p>hello</p>
-        <p>hello</p>
-        <p>hello</p>
-        <p>hello</p>
-        <p>hello</p>
-        <p>hello</p>
+        </ReactCropper>
+        <SendImageToServer />
       </DialogContent>
     </Dialog>
   );

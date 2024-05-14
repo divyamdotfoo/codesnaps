@@ -7,6 +7,8 @@ import {
 import { logTime } from "@/utils";
 import vision from "@google-cloud/vision";
 import OpenAi from "openai";
+import { PercentCrop } from "react-image-crop";
+import sharp from "sharp";
 
 const openai = new OpenAi({
   apiKey: process.env.OPENAI_KEY,
@@ -23,8 +25,6 @@ const client = new vision.ImageAnnotatorClient({
     universe_domain: "googleapis.com",
   },
 });
-
-// for client
 
 export async function submitCodeToHE(imgArrayBuffer: ArrayBuffer) {
   logTime("recieved buffer on server at");
@@ -62,7 +62,7 @@ export async function submitCodeToHE(imgArrayBuffer: ArrayBuffer) {
   return statusUrl;
 }
 
-async function getTextFromVisionApi(imgBuffer: Buffer) {
+export async function getTextFromVisionApi(imgBuffer: Buffer) {
   const [result] = await client.textDetection(imgBuffer);
   const detections = result.textAnnotations;
   if (detections) {
@@ -71,10 +71,10 @@ async function getTextFromVisionApi(imgBuffer: Buffer) {
       return snippetFromVision;
     }
   }
-  return null;
+  throw new Error("no detections generated while getting data from vision api");
 }
 
-async function getCleanSnippet(snippet: string, pl: string) {
+export async function getCleanSnippet(snippet: string, pl: string) {
   const completions = await openai.chat.completions.create({
     messages: [
       {
@@ -93,7 +93,7 @@ async function getCleanSnippet(snippet: string, pl: string) {
   return completions.choices[0].message.content;
 }
 
-async function getLanguageWithAi(snippet: string) {
+export async function getLanguageWithAi(snippet: string) {
   const completions = await openai.chat.completions.create({
     messages: [
       {
@@ -114,7 +114,7 @@ async function getLanguageWithAi(snippet: string) {
     console.log(completions.choices[0].message.content.trim());
     return completions.choices[0].message.content.trim();
   }
-  return null;
+  throw new Error("no content was returned by open ai ");
 }
 
 async function getStatusUpdateUrl(snippet: string, programmingL: LangType) {
@@ -137,3 +137,29 @@ async function getStatusUpdateUrl(snippet: string, programmingL: LangType) {
   }
   return data.status_update_url;
 }
+
+export const getCroppedImage = async (
+  imgBuffer: ArrayBuffer,
+  cropData: PercentCrop
+) => {
+  const img = sharp(Buffer.from(imgBuffer));
+  const { height: originalHeight, width: originalWidth } = await img.metadata();
+  if (!originalHeight || !originalWidth) {
+    throw new Error("internal server rrr");
+  }
+  const { height, width, x, y } = cropData;
+  const sx = Math.round((x / 100) * originalWidth);
+  const sy = Math.round((y / 100) * originalHeight);
+  const croppedWidth = Math.round((width / 100) * originalWidth);
+  const croppedHeight = Math.round((height / 100) * originalHeight);
+  const croppedImg = await img
+    .extract({
+      top: sy,
+      left: sx,
+      width: croppedWidth,
+      height: croppedHeight,
+    })
+    .toBuffer();
+
+  return croppedImg;
+};

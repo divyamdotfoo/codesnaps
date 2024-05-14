@@ -2,9 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: 19, 15, 24;
-  --color: 255, 255, 255;
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-color;
+  }
+  :root {
+    --background: 19, 15, 24;
+    --color: 255, 255, 255;
+  }
 }
 
 .codeEditor::-webkit-scrollbar {
@@ -25,4 +33,12 @@
 }
 .codeEditor::-webkit-scrollbar-button {
   display: none;
+}
+
+.ReactCrop__child-wrapper {
+  border-radius: 8px;
+}
+.ReactCrop__crop-selection::selection {
+  border: none;
+  background: none;
 }

@@ -21,9 +21,9 @@ export function MyDropzone() {
       acceptedFiles[0].arrayBuffer().then((b) => {
         if (b) {
           setImage(b, acceptedFiles[0].type, {
-            height: 0,
-            width: 0,
-            unit: "px",
+            height: 100,
+            width: 100,
+            unit: "%",
             x: 0,
             y: 0,
           });

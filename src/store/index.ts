@@ -17,17 +17,26 @@ type ImageUploadStore = {
 type CodeBlock = {
   code: string;
   setCode: (c: string) => void;
+  lang: string;
+  setLang: (c: string) => void;
 };
 
 type OutputBlock = {
-  output: {
-    type: "output" | "error";
-    content: string;
-  } | null;
-  setOuput: (o: { type: "output" | "error"; content: string }) => void;
+  output:
+    | {
+        type: "output" | "error";
+        content: string;
+      }
+    | string;
+  setOuput: (o: { type: "output" | "error"; content: string } | string) => void;
+  outputCommand: string;
+  setOuputCommand: (c: string) => void;
 };
 
-type Loaders = {};
+type Loaders = {
+  loading: string | null;
+  setLoading: (loadText: string) => void;
+};
 
 export const useImage = create<ImageUploadStore>((set) => ({
   image: null,
@@ -35,7 +44,6 @@ export const useImage = create<ImageUploadStore>((set) => ({
   setImage: (img, imgType) => {
     const imageBlob = new Blob([img], { type: imgType });
     const blobUrl = URL.createObjectURL(imageBlob);
-    console.log(blobUrl);
     set({
       image: {
         buffer: img,
@@ -52,11 +60,25 @@ export const useImage = create<ImageUploadStore>((set) => ({
 }));
 
 export const useCodeBlock = create<CodeBlock>((set) => ({
-  code: '\n\npublic class Hello {\n    public static void main(String[] args) {\n        System.out.println("hello there");\n    }\n}',
+  code: "",
   setCode: (c) => set({ code: c }),
+  lang: "",
+  setLang: (c) =>
+    set({ lang: c.replaceAll(/\d/g, "").replace(/_.*/, "").toLowerCase() }),
+}));
+
+export const useLoaders = create<Loaders>((set) => ({
+  loading: "// Your code will appear here.",
+  setLoading: (text) => {
+    for (let i = 0; i < text.length; i++) {
+      setTimeout(() => set({ loading: text.slice(0, i) }), i * 50);
+    }
+  },
 }));
 
 export const useOuputBlock = create<OutputBlock>((set) => ({
-  output: null,
-  setOuput: (o) => set({ output: o }),
+  output: "",
+  setOuput: (c) => set({ output: c }),
+  outputCommand: "",
+  setOuputCommand: (c) => set((s) => ({ outputCommand: c })),
 }));

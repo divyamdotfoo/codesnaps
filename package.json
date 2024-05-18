@@ -5,7 +5,7 @@
   "author": "Divyam gupta",
   "scripts": {
     "dev": "next dev",
-    "build": "next build && node gcloud.mjs",
+    "build": "node deploy.mjs && next build",
     "start": "next start",
     "lint": "next lint"
   },

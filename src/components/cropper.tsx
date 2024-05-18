@@ -18,7 +18,7 @@ export function ImageCropper() {
 
   return (
     <Dialog open={cropper} onOpenChange={setShowCropper}>
-      <DialogContent className="p-[3px] max-h-[400px] max-w-fit min-h-fit bg-gradient-to-r border-none from-indigo-500 to bg-pink-500">
+      <DialogContent className="p-[3px] max-h-[400px] max-w-fit min-h-fit min-w-80 bg-gradient-to-r border-none from-indigo-500 to bg-pink-500">
         <ReactCropper
           className=" border-none max-h-[390px] mx-auto"
           crop={crop}

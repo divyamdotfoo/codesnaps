@@ -80,6 +80,5 @@ async function poll(
   } else {
     setLoading("");
     setOutput(`${status.type}:\n${status.content}`);
-    console.log(status);
   }
 }

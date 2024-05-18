@@ -25,6 +25,8 @@ const config = {
         background: "rgb(var(--background))",
         color: "rgb(var(--color))",
         foreground: "hsl(var(--foreground))",
+        redGradient: "rgb(var(--red))",
+        purpleGradient: "rgb(var(--purple))",
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",

@@ -1,21 +1,30 @@
 import { ImageCropper } from "@/components/cropper";
 import { MyDropzone } from "@/components/dropzone";
 import { CodeEditor } from "@/components/editor";
+import { Examples } from "@/components/examples";
+import { OutputBlock } from "@/components/output";
+import { Supported } from "@/components/supported-lang";
 import Link from "next/link";
 
 export default function Page() {
   return (
     <div className=" min-h-screen bg-background text-color p-4 relative">
       <ImageCropper />
-      <div className=" max-w-5xl mx-auto relative">
+      <div className=" xl:max-w-5xl lg:max-w-4xl mx-auto relative">
         <div className=" flex items-center justify-between w-full rounded-[10px]">
           <h1 className=" text-5xl font-semibold inline-block bg-clip-text bg-gradient-to-r from-indigo-500 to to-pink-500 text-transparent ">
             Codesnap
           </h1>
           <Socials />
         </div>
+
         <MyDropzone />
-        <CodeEditor />
+        <div className=" w-full pt-4 flex lg:flex-row flex-col items-start  gap-4 px-4 lg:px-0">
+          <CodeEditor />
+          <OutputBlock />
+        </div>
+        <Examples />
+        <Supported />
       </div>
     </div>
   );

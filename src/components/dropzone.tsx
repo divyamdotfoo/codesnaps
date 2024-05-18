@@ -12,12 +12,12 @@ export function MyDropzone() {
     isDragAccept,
     isDragReject,
     acceptedFiles,
+    isDragActive,
   } = useDropzone({
     accept: { "image/*": [] },
   });
   useEffect(() => {
     if (acceptedFiles[0]) {
-      console.log(acceptedFiles[0]);
       acceptedFiles[0].arrayBuffer().then((b) => {
         if (b) {
           setImage(b, acceptedFiles[0].type, {
@@ -32,15 +32,17 @@ export function MyDropzone() {
     }
   }, [acceptedFiles]);
   return (
-    <div className=" w-1/2 mx-auto h-12 my-4">
+    <div className=" lg:w-1/2 w-full px-2 mx-auto h-12 my-4">
       <div
         {...getRootProps({ isFocused, isDragAccept, isDragReject })}
-        className=" cursor-pointer w-full h-full border-[1px] rounded-md border-white border-dashed flex items-center justify-center"
-        // style={{
-        //   borderImage:
-        //     "linear-gradient(to right, rgb(99,102,241), rgb(236, 72, 153)) 1",
-        //   borderWidth: "2px",
-        // }}
+        className=" cursor-pointer w-full h-full rounded-md border-white border-dashed flex items-center justify-center"
+        style={{
+          borderImage:
+            isFocused || isDragActive
+              ? "linear-gradient(to right, rgb(99,102,241), rgb(236, 72, 153)) 1"
+              : "",
+          borderWidth: "1px",
+        }}
       >
         <input {...getInputProps()} />
         <p className=" font-medium opacity-80 tracking-wider">

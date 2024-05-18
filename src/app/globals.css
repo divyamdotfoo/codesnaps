@@ -12,26 +12,28 @@
   :root {
     --background: 19, 15, 24;
     --color: 255, 255, 255;
+    --red: 153, 27, 27;
+    --purple: 147, 51, 234;
   }
 }
 
-.codeEditor::-webkit-scrollbar {
+.scrollContainer::-webkit-scrollbar {
   width: 4px;
   height: 4px;
 }
 
-.codeEditor::-webkit-scrollbar-thumb {
+.scrollContainer::-webkit-scrollbar-thumb {
   background-color: rgba(255, 255, 255, 0.47);
   border-radius: 20px;
 }
-.codeEditor::-webkit-scrollbar-track {
+.scrollContainer::-webkit-scrollbar-track {
   margin: 5px;
 }
 
-.codeEditor::-webkit-scrollbar-corner {
+.scrollContainer::-webkit-scrollbar-corner {
   display: none;
 }
-.codeEditor::-webkit-scrollbar-button {
+.scrollContainer::-webkit-scrollbar-button {
   display: none;
 }
 
@@ -41,4 +43,11 @@
 .ReactCrop__crop-selection::selection {
   border: none;
   background: none;
+}
+
+@media (min-width: 768px) {
+  .transform-md {
+    transform: translateX(calc(35px - 70px * var(--random-x)))
+      translateY(calc(30px - 60px * var(--random-y)));
+  }
 }

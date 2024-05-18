@@ -1,46 +1,41 @@
 "use client";
-import { useCodeBlock } from "@/store";
+import { useCodeBlock, useLoaders } from "@/store";
+import { useEffect, useRef } from "react";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { nightOwl } from "react-syntax-highlighter/dist/esm/styles/hljs";
 export function CodeEditor() {
-  const { code, setCode } = useCodeBlock((s) => ({
+  const { code, lang, setCode } = useCodeBlock((s) => ({
     code: s.code,
     setCode: s.setCode,
+    lang: s.lang,
   }));
-  // const codeString = `\n
-  //   "use client";\nimport SyntaxHighlighter from "react-syntax-highlighter";\nimport { dracula } from "react-syntax-highlighter/dist/esm/styles/hljs";\nexport function CodeEditor() {\nconst codeString = use client
-  //     import SyntaxHighlighter from "react-syntax-highlighter";
-  //     import { dracula } from "react-syntax-highlighter/dist/esm/styles/hljs";
-  //     export function CodeEditor() {
-  //       const codeString = "(num) => num + 1";
-  //       return (
-  //         <SyntaxHighlighter language="javascript" style={dracula}>
-  //           {codeString}
-  //         </SyntaxHighlighter>
-  //       );
-  //     };
-  //     return (
-  //       <div className=" xl:w-1/2">
-  //         <SyntaxHighlighter language="javascript" style={dracula}>
-  //           {codeString}
-  //         </SyntaxHighlighter>
-  //       </div>
-  //     );
-  //   }`;
+  const loading = useLoaders((s) => s.loading);
+  const editorRef = useRef<HTMLDivElement | null>(null);
 
-  // useEffect(() => {
-  //   for (let i = 0; i < codeString.length; i += 10) {
-  //     setTimeout(() => {
-  //       setCode(codeString.slice(i, i + 10));
-  //     }, 50 * i);
-  //   }
-  // }, []);
+  useEffect(() => {
+    const editorEl = document.getElementsByClassName("codeEditor")[0];
+    if (editorEl) {
+      editorEl.scrollTo({
+        top: editorEl.scrollHeight,
+        behavior: "smooth",
+      });
+    }
+  }, [code]);
   return (
-    <div className="xl:w-1/2 relative overflow-x-hidden bg-gradient-to-r from-indigo-500 to-pink-500 p-[2px] rounded-[6px]">
+    <div
+      className=" lg:basis-1/2 w-full relative overflow-x-hidden overflow-y-hidden bg-gradient-to-r from-indigo-500 to-pink-500 p-[2px] rounded-[6px]"
+      ref={editorRef}
+      style={{
+        boxShadow:
+          "0 10px 20px rgba(0, 0, 0, 0.3), 0 1px 10px rgba(255, 105, 180, 0.5)",
+      }}
+    >
       <Mac />
       <SyntaxHighlighter
-        language="rust"
-        className="codeEditor"
+        language={lang}
+        className="scrollContainer codeEditor"
+        startingLineNumber={-1}
+        showLineNumbers
         style={{
           ...nightOwl,
           hljs: {
@@ -57,7 +52,7 @@ export function CodeEditor() {
           },
         }}
       >
-        {!code.length ? "\n\n// Your code will appear here." : code}
+        {!code.length ? `\n\n${loading}` : code}
       </SyntaxHighlighter>
     </div>
   );
@@ -67,7 +62,7 @@ export function CodeEditor() {
 
 */
 
-function Mac() {
+export function Mac() {
   return (
     <div className=" absolute top-[2px] left-1 right-2 h-10 bg-background z-40">
       <svg

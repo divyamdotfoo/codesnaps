@@ -1,5 +1,11 @@
 "use server";
-import { HackerEarthStatus } from "@/types";
+import { CodeSnapError } from "@/server/error";
+import {
+  HackerEarthReqObject,
+  HackerEarthRes,
+  HackerEarthStatus,
+  LangType,
+} from "@/types";
 
 export async function getUpdateFromHE(statusUrl: string): Promise<
   | {
@@ -45,4 +51,31 @@ export async function getUpdateFromHE(statusUrl: string): Promise<
     return { type: "error", content: "Time limit exceeded" };
 
   return "continue-polling";
+}
+
+export async function getStatusUpdateUrl(
+  snippet: string,
+  programmingL: LangType
+) {
+  try {
+    const reqBody: HackerEarthReqObject = {
+      lang: programmingL,
+      source: snippet,
+    };
+    const res = await fetch(process.env.HACKER_EARTH_URL!, {
+      headers: {
+        "Content-Type": "application/json",
+        "client-secret": process.env.HACKER_EARTH_SECRET!,
+      },
+      method: "POST",
+      body: JSON.stringify(reqBody),
+    });
+    const data: HackerEarthRes = await res.json();
+    if (!data.request_status || !data.status_update_url) {
+      throw new Error("");
+    }
+    return data.status_update_url;
+  } catch (e) {
+    throw new CodeSnapError("Hacker earth api failure", "HackerEarthApiFail");
+  }
 }

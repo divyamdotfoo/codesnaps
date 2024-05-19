@@ -4,6 +4,8 @@ import { getStatusUpdateUrl, getUpdateFromHE } from "@/actions";
 import { LangType, runCommands } from "@/types";
 import { CodeSnapError, CodeSnapErrorName } from "@/server/error";
 import { logTime } from "@/utils";
+// @ts-ignore
+import { toast } from "sonner";
 export function SendImageToServer() {
   const { imageData, cropData, setShowCropper } = useImage((s) => ({
     imageData: s.image,
@@ -36,7 +38,7 @@ export function SendImageToServer() {
     setShowCropper(false);
     try {
       setCode("");
-      setLoading("// Extracting code from snippet...");
+      setLoading("// Extracting code from snippet....");
       setOutputCommand("");
       setOutput("");
       const { lang, statusUrl } = await requestSubmitCodeToHE(
@@ -54,8 +56,23 @@ export function SendImageToServer() {
         }, 30 * i + Math.round(Math.random() * 15));
       }
     } catch (e) {
+      setCode("");
+      setLoading("// Your code will appear here.");
+      setOutputCommand("");
+      setOutput("");
       if (e instanceof CodeSnapError) {
-        console.log(e.name, e.message);
+        const errorName = e.name as CodeSnapErrorName;
+        if (errorName === "UnsupportedLang") {
+          toast.error("Unsupported Language", {
+            position: "top-center",
+            description: "Uploaded code does not support our languages.",
+          });
+        } else {
+          toast.error("Something went wrong", {
+            position: "top-center",
+            description: "Please try again later.",
+          });
+        }
       }
     }
   }

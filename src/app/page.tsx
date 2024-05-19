@@ -13,7 +13,7 @@ export default function Page() {
       <div className=" xl:max-w-5xl lg:max-w-4xl mx-auto relative">
         <div className=" flex items-center justify-between w-full rounded-[10px]">
           <h1 className=" text-5xl font-semibold inline-block bg-clip-text bg-gradient-to-r from-indigo-500 to to-pink-500 text-transparent ">
-            Codesnap
+            Codesnaps
           </h1>
           <Socials />
         </div>
@@ -53,7 +53,7 @@ function Socials() {
         </svg>
       </Link>
       <Link
-        href={"https://twitter.com/divyamdotfoo"}
+        href={"https://twitter.com/divyamdotfoo/codesnaps"}
         className=" hover:scale-105 transition-all"
         target="_blank"
       >

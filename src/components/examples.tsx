@@ -118,6 +118,7 @@ const Example = ({
       <Image
         src={img}
         alt={alt}
+        placeholder="blur"
         className={cn(
           " w-80 h-72 rounded-[10px]  brightness-[0.9] hover:brightness-105"
         )}

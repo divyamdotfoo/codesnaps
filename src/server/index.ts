@@ -9,13 +9,14 @@ const openai = new OpenAi({
 });
 
 const client = new vision.ImageAnnotatorClient({
+  projectId: process.env.PROJECT_ID,
   credentials: {
-    client_id: process.env.CLIENT_ID,
-    client_email: process.env.CLIENT_EMAIL,
-    project_id: process.env.PROJECT_ID,
     private_key_id: process.env.PRIVATE_KEY_ID,
     private_key:
       "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCyXbsjs3E0kEvv\nu6JZEnaNvJFpvsM6k/eemcN2syA6TDb4+N42FLk6TMlTTWg4TPBDXD0H0rxlztvU\n7y5NWJHilmYowWMv9fSyIm4UA3r34jHVUgWjcFe07I6lFDMWcFf/NKmyeJlKQYAs\niL9WhS44ufCl9xEZsibj6kVCkzqHcdlUhh3InGKdfsX9EjIyD0ytQ1FNxYdidKDD\nHm9+s+7w8JUidFCZHGhPXSTIRruuSMWimQUE4TncRIL9Dq+NA1n21nXTrjInlEaA\nbw/1TcfmEC6xZON1VvTwR7dBweRFmMUp4hDvdtxZZpc741biiTD0XmlETZlo60Tj\nCo8Lv2+PAgMBAAECggEAIBxkwPggpMRnj1i50QxUYI72pNFth0G1Pg3TlS6JWkV3\nThpLsvPHJvpE8mTIov4i8RWNfTeQqEl15R9MOCt+VAsciDDMoQlIDLvLEnpP7ImB\nzDQwhKyIda9yvMBmtB70kKLT/Cfe/PHO1/WkcLiYSikbbF2O7A/ZFYYLAwHLcy+b\nd4c70JPjpA+UexVQpenz7kRgBRWuulXG9RLQ4Fz4cMviJNHVMb28E5fJahAbbScs\n2j4pXerdNOArIo1Lq5E8wRiHSmkyN66ho3N+EtEXbVabswHi7trPB6uPexqE289e\nv8fmLdQkjioC+ZNdazAAkzNbHBvRODrP4wrpIChmHQKBgQD6T4MQMolvXJHglEyZ\nP+pedyAWHAX6S+RVNDJCOxz1rFKhTKV4HAlbbaeaXUrlOUalsthLTTIjX4QssUVY\nQBHD1IuFRZLLj4+eOQZSFpTSQMeLlgOUBsYV1rdEjr3q8/r4W5BAeX8Q4tNMqaiw\nZpjFq0OE8QkerWUg0pSBj3cM/QKBgQC2a5gb0CpFPUZ+6rDs5mobJ0dn5zvqWCfW\nEZG1noGd2ZYREYJ4NBtPa9x3VotIAZXXpwsq9LmvOQ6qW+B3RmoqD7wuqn+sfBMq\nhz2pEOqex9CYDKrP/EHfbQAtS7O50wQwp8U8ZtwAqMK4Kg0bZqI8lng3u10ZYofB\nPAuZqWyaewKBgQDcVwXOSk5E4z3ebW0IMgVDZqWuELkKXaf/gNUFDDgv4qNSLcAy\n/KsX+mzhK2J0aXjQ/5/6mVebX8df+CRMzQlWU1EF3fqciiEobJYtyIb0leWR8Fny\nAgx4yOvGw8hWfLLd0OwodUrvOFw8TdSag5XT2zCyY+NdR9GPlQ75BasMmQKBgDgQ\njWlO6w7orDfpjYLhtg6uXcXTTZjSizvBnpTBKHkJHJQWW5DyAsrADbwnvxrcUd87\nmbUUDdWKpbU6E5zU6WAQAfgdsquiXomdkxfY+SLfqn5wtjbCAsTWTU2ejJg6AHmr\ntnS/8DHLrDzJv8mCG66fWEdYsF5S6AI9oBsT9SrtAoGBAO+sp+wMGH/8WfFrmdcB\ntjP3KUwBkPHfGqbpQhEjZ+x73VYScEUyURoErcqJHitEGLC/ekgm1mR5t8nW/hB2\nMJZBToHMVVGDT7kCMu11WhN4ZDwo0l/wdHPw+f4/V6nS90YY3yN87gw36gDFtVFV\n4ZKqTyn7/nSzs4DsYfzBBbeV\n-----END PRIVATE KEY-----\n",
+    client_email: process.env.CLIENT_EMAIL,
+    client_id: process.env.CLIENT_ID,
+    universe_domain: "googleapis.com",
   },
 });
 

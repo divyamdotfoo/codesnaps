@@ -15,6 +15,7 @@ export async function getTextFromVisionApi(imgBuffer: Buffer) {
   try {
     res = await client.textDetection(imgBuffer);
   } catch (e) {
+    console.log(e);
     throw new CodeSnapError("Seems like vision api failed", "VisionApiFailure");
   }
   const [result] = res;

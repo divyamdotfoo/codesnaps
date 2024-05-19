@@ -52,6 +52,7 @@ export async function POST(req: Request) {
 
     return new StreamingTextResponse(combinedStream);
   } catch (e) {
+    console.log(e);
     if (e instanceof CodeSnapError)
       return Response.json(
         { name: e.name, message: e.message },

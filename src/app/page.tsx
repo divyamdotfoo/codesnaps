@@ -34,7 +34,7 @@ function Socials() {
   return (
     <div className=" flex items-center gap-4">
       <Link
-        href={"https://github.com/divyamdotfoo"}
+        href={"https://github.com/divyamdotfoo/codesnaps"}
         className=" w-7 h-7 block hover:scale-105 transition-all"
         target="_blank"
       >
@@ -53,7 +53,7 @@ function Socials() {
         </svg>
       </Link>
       <Link
-        href={"https://twitter.com/divyamdotfoo/codesnaps"}
+        href={"https://twitter.com/divyamdotfoo"}
         className=" hover:scale-105 transition-all"
         target="_blank"
       >
